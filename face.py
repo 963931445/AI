@@ -1,35 +1,42 @@
-import numpy as np
+# 显示图片
+# 1.导入库
+# import cv2
+# # 2.加载图片
+# img = cv2.imread("./face2.jpg")
+# # 3.创建窗口
+# cv2.namedWindow('James 窗口')
+# # 4.显示图片
+# cv2.imshow("jamas",img)
+# # 5.暂停窗口
+# cv2.waitKey(0)
+# # 6.关闭窗口
+# cv2.destroyAllWindows()
+
+# 人脸识别
+# 1.导入库
 import cv2
+# 2.加载图片
+img = cv2.imread("./face2.jpg")
+# 3.加载人脸模型
+face1 = cv2.CascadeClassifier("./haarcascade_frontalface_alt.xml")
+# 4.调整图片灰度
+# 提升性能（没必要识别颜色，提高灰度）
+gray = cv2.cvtColor(img,cv2.COLOR_RGB2BGR)
 
-import numpy as ny
-import cv2
-def distance(one,two):
-  return ny.sqrt(ny.sum((one-two)*(one-two)))
+# 5.检查人脸
+faces = face1.detectMultiScale(gray)
+# 6.标记人脸
+for (x,y,w,h) in faces:
+    # 四个参数 1.图片 2.坐标原点 3.识别大小 4.颜色 5.线宽
+    cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),10)
 
-img=cv2.imread("1.jpg");
-w=img.shape[1]
-h=img.shape[0]
-myimg=ny.zeros((h,w,3))
-black=ny.array([0,0,0]);
-white=ny.array([255,255,255]);
-gray=ny.array([125,125,125]);
-yz =23
-for y in range(0,h-1):
-  for x in range(0,w-1):
-    current=img[y,x,:]
-    right=img[y,x+1,:]
-    down=img[y+1,x+1,:]
-    if distance(current,right)>yz and distance(current,down)>yz:
-      myimg[y,x,:]=black;
-    elif   distance(current,right)<=yz and distance(current,down)<=yz:
-      myimg[y, x, :] = white;
-    else:
-      myimg[y, x, :]=gray;
+# 7.创建窗口
+cv2.namedWindow('james')
 
-cv2.imwrite("2.jpg",myimg);
-cv2.destroyAllWindows();
-
-
-
-
+# 8.显示图片
+cv2.imshow('jkl',img)
+# 9.暂停
+cv2.waitKey(0)
+# 10.关闭窗口
+cv2.destroyWindow()
 
